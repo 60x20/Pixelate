@@ -12,7 +12,7 @@ imageForm.addEventListener('submit', (e) => {
   
   const formData = Object.fromEntries(new FormData(e.currentTarget));
   const inputImageFile = formData['image-file'];
-  const pixelSize = Number(formData['pixel-size']);
+  const pixelSize = parseInt(formData['pixel-size']);
   
   // if it's not an image file (type === image/*) don't continue
   const imageInTheBeginningRegex = /^image/;
