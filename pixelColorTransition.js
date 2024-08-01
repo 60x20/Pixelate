@@ -26,6 +26,7 @@ async function startPixelating(imageFile, pixelSize) {
   // image object version will be used to get the dimensions, and will also be rendered onto the off-scren canvas
   const inputImageAsObject = await convertImageFileIntoImageObject(imageFile);
   makeTheImageDimensionsAMultiple(inputImageAsObject, pixelSize);
+  const inputImageAsData = convertImageObjectIntoImageData(inputImageAsObject);
 }
 
 async function convertImageFileIntoImageObject(imageFile) {
@@ -58,4 +59,11 @@ function makeTheImageDimensionsAMultiple(imageObject, pixelSize) {
     ? imageObject.naturalHeight + (imageObject.naturalHeight % pixelSize)
     : pixelSize
   ;
+}
+
+function convertImageObjectIntoImageData(imageObject) {
+  // setting width and height of the canvas from image object, for optimization purposes
+  ({ width: offscreenCanvas.width, height: offscreenCanvas.height } = imageObject);
+  offscreenContext.drawImage(imageObject, 0, 0, imageObject.width, imageObject.height);
+  return offscreenContext.getImageData(0, 0, imageObject.width, imageObject.height);
 }
