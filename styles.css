@@ -1,0 +1,16 @@
+* {
+  user-select: none;
+  font-size: 20px;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1rem;
+}
+
+label:has(input[type="file"]) {
+  /* making the element block level */
+  width: 100%;
+}
