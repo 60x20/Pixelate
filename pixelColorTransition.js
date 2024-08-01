@@ -15,7 +15,15 @@ imageForm.addEventListener('submit', (e) => {
   // if it's not an image file (type === image/*) don't continue
   const imageInTheBeginningRegex = /^image/;
   if (!imageInTheBeginningRegex.test(inputImageFile.type)) throw new Error('file should be an image file');
+
+  startPixelating(inputImageFile, pixelSize);
 })
+
+async function startPixelating(imageFile, pixelSize) {
+  // since order is important, awaits are used;
+  // image object version will be used to get the dimensions, and will also be rendered onto the off-scren canvas
+  const inputImageAsObject = await convertImageFileIntoImageObject(imageFile);
+}
 
 async function convertImageFileIntoImageObject(imageFile) {
   const fileAsDataURL = await new Promise((resolve) => {
