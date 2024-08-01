@@ -23,6 +23,7 @@ async function startPixelating(imageFile, pixelSize) {
   // since order is important, awaits are used;
   // image object version will be used to get the dimensions, and will also be rendered onto the off-scren canvas
   const inputImageAsObject = await convertImageFileIntoImageObject(imageFile);
+  makeTheImageDimensionsAMultiple(inputImageAsObject, pixelSize);
 }
 
 async function convertImageFileIntoImageObject(imageFile) {
@@ -41,4 +42,18 @@ async function convertImageFileIntoImageObject(imageFile) {
   });
 
   return imageObj;
+}
+
+function makeTheImageDimensionsAMultiple(imageObject, pixelSize) {
+  // making the dimensions a multiple of pixelSize, either through equalizing or adding the remainder
+  // width
+  imageObject.width = pixelSize <= imageObject.naturalWidth
+    ? imageObject.naturalWidth + (imageObject.naturalWidth % pixelSize)
+    : pixelSize
+  ;
+  // height
+  imageObject.height = pixelSize <= imageObject.naturalHeight 
+    ? imageObject.naturalHeight + (imageObject.naturalHeight % pixelSize)
+    : pixelSize
+  ;
 }
