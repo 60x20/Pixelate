@@ -3,6 +3,19 @@
   font-size: 20px;
 }
 
+#before-after-container {
+  display: grid;
+  max-width: 900px;
+  width: 100%;
+  margin: 1rem auto 0;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+img {
+  width: 100%;
+}
+
 form {
   width: 100%;
   display: flex;
