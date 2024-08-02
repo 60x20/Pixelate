@@ -74,4 +74,41 @@ async function convertImageDataIntoObjectUrl(imageData) {
   offscreenContext.putImageData(imageData, 0, 0);
   return URL.createObjectURL(await offscreenCanvas.convertToBlob());
 }
+
+// divide into groups of pixelSize pixels, and select the middle pixel, and replace the group with it
+function pixelateImageData(imageData, pixelSize) {
+  const {
+    width: dimensionW,
+    height: dimensionH
+  } = imageData;
+  
+  const
+    pixelatedDimensionW = dimensionW / pixelSize,
+    pixelatedDimensionH = dimensionH / pixelSize
+  ;
+
+  const pixelatedVersion = new ImageData(pixelatedDimensionW, pixelatedDimensionH);
+  let pixelatedVersionPixelIndex = 0;
+
+  const distanceBetweenCenterAndFirst = Math.floor((pixelSize - 1) / 2)
+  // by starting at the center, we are always selecting the pixels at the center
+  for (let y = distanceBetweenCenterAndFirst; y < dimensionH; y += pixelSize) {
+    for (let x = distanceBetweenCenterAndFirst; x < dimensionW; x += pixelSize) {
+      // a pixel consists of 4 parts, so multiplied by 4
+      const indexOfCenterOfGroup = (y * dimensionW + x) * 4;
+      const
+        centerR = imageData.data[indexOfCenterOfGroup],
+        centerG = imageData.data[indexOfCenterOfGroup + 1],
+        centerB = imageData.data[indexOfCenterOfGroup + 2],
+        centerA = imageData.data[indexOfCenterOfGroup + 3]
+      ;
+      pixelatedVersion.data[pixelatedVersionPixelIndex] = centerR;
+      pixelatedVersion.data[pixelatedVersionPixelIndex + 1] = centerG;
+      pixelatedVersion.data[pixelatedVersionPixelIndex + 2] = centerB;
+      pixelatedVersion.data[pixelatedVersionPixelIndex + 3] = centerA;
+      pixelatedVersionPixelIndex += 4;
+    }
+  }
+
+  return pixelatedVersion;
 }
