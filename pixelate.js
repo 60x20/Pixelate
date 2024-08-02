@@ -22,7 +22,7 @@ imageForm.addEventListener('submit', (e) => {
   if (!imageInTheBeginningRegex.test(inputImageFile.type)) throw new Error('file should be an image file');
 
   startPixelating(inputImageFile, pixelSize);
-})
+});
 
 async function startPixelating(imageFile, pixelSize) {
   // since order is important, awaits are used;
