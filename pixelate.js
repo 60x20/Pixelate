@@ -6,6 +6,9 @@ const offscreenContext = offscreenCanvas.getContext('2d', { willReadFrequently: 
 
 const imageForm = document.getElementById('image-input-form');
 
+const inputImage = document.getElementById('image-input');
+const resultImage = document.getElementById('image-result');
+
 // extract input data
 imageForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -27,6 +30,11 @@ async function startPixelating(imageFile, pixelSize) {
   const inputImageAsObject = await convertImageFileIntoImageObject(imageFile);
   makeTheImageDimensionsAMultiple(inputImageAsObject, pixelSize);
   const inputImageAsData = convertImageObjectIntoImageData(inputImageAsObject);
+  const pixelatedVersion = pixelateImageData(inputImageAsData, pixelSize);
+
+  // render
+  inputImage.src = inputImageAsObject.src;
+  resultImage.src = await convertImageDataIntoObjectUrl(pixelatedVersion);
 }
 
 async function convertImageFileIntoImageObject(imageFile) {
