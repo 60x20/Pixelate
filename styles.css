@@ -32,3 +32,7 @@ label:has(input[type="file"]) {
   /* making the element block level */
   width: 100%;
 }
+
+.display-none {
+  display: none !important;
+}
