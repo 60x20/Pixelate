@@ -67,3 +67,11 @@ function convertImageObjectIntoImageData(imageObject) {
   offscreenContext.drawImage(imageObject, 0, 0, imageObject.width, imageObject.height);
   return offscreenContext.getImageData(0, 0, imageObject.width, imageObject.height);
 }
+
+async function convertImageDataIntoObjectUrl(imageData) {
+  // setting width and height of the canvas from image data, for optimization purposes
+  ({ width: offscreenCanvas.width, height: offscreenCanvas.height } = imageData);
+  offscreenContext.putImageData(imageData, 0, 0);
+  return URL.createObjectURL(await offscreenCanvas.convertToBlob());
+}
+}
