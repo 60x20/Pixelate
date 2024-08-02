@@ -33,7 +33,9 @@ async function startPixelating(imageFile, pixelSize) {
   const pixelatedVersion = pixelateImageData(inputImageAsData, pixelSize);
 
   // render
+  inputImage.classList.remove('display-none');
   inputImage.src = inputImageAsObject.src;
+  resultImage.classList.remove('display-none');
   resultImage.src = await convertImageDataIntoObjectUrl(pixelatedVersion);
 }
 
