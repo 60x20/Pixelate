@@ -48,15 +48,15 @@ async function convertImageFileIntoImageObject(imageFile) {
 }
 
 function makeTheImageDimensionsAMultiple(imageObject, pixelSize) {
-  // making the dimensions a multiple of pixelSize, either through equalizing or adding the remainder
+  // making the dimensions a multiple of pixelSize, either through equalizing (= first multiple) or removing remainder (= closest multiple)
   // width
   imageObject.width = pixelSize <= imageObject.naturalWidth
-    ? imageObject.naturalWidth + (imageObject.naturalWidth % pixelSize)
+    ? imageObject.naturalWidth - (imageObject.naturalWidth % pixelSize)
     : pixelSize
   ;
   // height
   imageObject.height = pixelSize <= imageObject.naturalHeight 
-    ? imageObject.naturalHeight + (imageObject.naturalHeight % pixelSize)
+    ? imageObject.naturalHeight - (imageObject.naturalHeight % pixelSize)
     : pixelSize
   ;
 }
